@@ -42,7 +42,8 @@ class PatientTable extends DataTableComponent
             Column::make('ID','id')
             ->sortable(),
             Column::make('Name')
-            ->sortable(),
+            ->sortable()
+            ->searchable(),
             Column::make('Blood Pressure','blood_pressure'),
             Column::make('Actions')
 

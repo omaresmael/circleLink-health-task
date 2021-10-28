@@ -13,6 +13,9 @@ class BloodPressureFormat implements Rule
         if(!Str::contains($value, '/'))
             return false;
         $readings = explode("/", $value);
+        if (sizeof($readings) > 2)
+            return false;
+
         foreach($readings as $reading)
         {
             if(!is_numeric($reading))
@@ -28,6 +31,6 @@ class BloodPressureFormat implements Rule
      */
     public function message()
     {
-        return 'The blood pressure format ex: 120\80 ';
+        return 'The blood pressure format ex: 120/80';
     }
 }

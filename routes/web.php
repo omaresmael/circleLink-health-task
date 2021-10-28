@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PatientController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', [PatientController::class,'index'])->name('patient.index');
+Route::get('/patient/create', [PatientController::class,'create'])->name('patient.create');

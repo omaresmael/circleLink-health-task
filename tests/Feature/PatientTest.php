@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Http\Livewire\PatientCreate;
 use App\Http\Livewire\PatientTable;
 use App\Models\Patient;
 use App\Rules\BloodPressureFormat;
@@ -13,12 +14,14 @@ use Tests\TestCase;
 class PatientTest extends TestCase
 {
     use RefreshDatabase;
+
+    // index and update patient tests
     /**
      * @test
     **/
     public function itChecksIfTheDataTableExists()
     {
-        $this->get('/')->assertSeeLivewire('patient-table');
+        $this->get(route('patient.index'))->assertSeeLivewire('patient-table');
     }
 
     /**
@@ -52,6 +55,21 @@ class PatientTest extends TestCase
             ->assertHasErrors(['blood_pressure' => new BloodPressureFormat()]);
 
     }
+    /**
+     * @test
+     **/
+    public function itDoesntUpdateBloodPressureIfItHasMoreThanOneSlash()
+    {
+        $patient = Patient::factory()->create([
+            'blood_pressure' => '90/60'
+        ]);
+
+        Livewire::test(PatientTable::class)
+            ->set('blood_pressure', '90/60/92')
+            ->call('update',$patient->id)
+            ->assertHasErrors(['blood_pressure' => new BloodPressureFormat()]);
+
+    }
 
     /**
      * @test
@@ -67,5 +85,28 @@ class PatientTest extends TestCase
             ->call('update',$patient->id)
             ->assertHasErrors(['blood_pressure' => new BloodPressureFormat()]);
 
+    }
+
+    // create tests
+
+    /**
+     * @test
+     **/
+    public function itChecksIfTheCreateComponentExists()
+    {
+        $this->get(route('patient.create'))->assertSeeLivewire('patient-create');
+    }
+
+    /**
+     * @test
+     **/
+    public function itCreatesAPatient()
+    {
+        Livewire::test(PatientCreate::class)
+            ->set('name', 'omar esmaeel')
+            ->set('blood_pressure', '120/80')
+            ->call('store');
+
+            $this->assertTrue(Patient::where('name','omar esmaeel')->exists());
     }
 }
