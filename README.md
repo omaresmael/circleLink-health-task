@@ -1,4 +1,4 @@
-## CircleLink Health task 
+## CircleLink Health Task 
 Its a web app that does the Following
 
 * Displays patients' data (with sort - search features)
