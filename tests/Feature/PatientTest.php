@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Exports\PatientExport;
 use App\Http\Livewire\PatientCreate;
 use App\Http\Livewire\PatientTable;
 use App\Models\Patient;
@@ -9,13 +10,14 @@ use App\Rules\BloodPressureFormat;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Livewire\Livewire;
+use Maatwebsite\Excel\Facades\Excel;
 use Tests\TestCase;
 
 class PatientTest extends TestCase
 {
     use RefreshDatabase;
 
-    // index and update patient tests
+    // index & update tests ...
     /**
      * @test
     **/
@@ -87,7 +89,7 @@ class PatientTest extends TestCase
 
     }
 
-    // create tests
+    // create tests ...
 
     /**
      * @test
@@ -108,5 +110,30 @@ class PatientTest extends TestCase
             ->call('store');
 
             $this->assertTrue(Patient::where('name','omar esmaeel')->exists());
+    }
+ // export tests ...
+    /**
+     * @test
+     **/
+    public function itDownloadsCsvFile()
+    {
+        $response = $this->get(route('patient.export'));
+        $response->assertDownload('patients.csv');
+    }
+
+    /**
+     * @test
+     **/
+    public function itDownloadsCsvFileWithPatientData()
+    {
+        Excel::fake();
+        Patient::factory()->create([
+            'name' => 'omar esmaeel'
+        ]);
+        $this->get(route('patient.export'));
+        Excel::assertDownloaded('patients.csv', function(PatientExport $export) {
+            return $export->collection()->contains('name','=','omar esmaeel');
+        });
+
     }
 }

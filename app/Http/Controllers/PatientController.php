@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PatientExport;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PatientController extends Controller
 {
@@ -14,5 +16,9 @@ class PatientController extends Controller
     public function create()
     {
         return view('patient.create');
+    }
+    public function export()
+    {
+        return Excel::download(new PatientExport, 'patients.csv');
     }
 }

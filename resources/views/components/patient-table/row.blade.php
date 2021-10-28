@@ -30,7 +30,7 @@
 
             <button wire:click="edit({{$row->id}})"
                     class="text-green-700 hover:text-white hover:bg-green-700 border-solid
-                           border border-gray-700 font-bold py-2 px-4 rounded">Edit</button>
+                           border border-gray-700 font-semibold py-2 px-4 rounded">Edit</button>
 
     @endif
 </x-livewire-tables::table.cell>

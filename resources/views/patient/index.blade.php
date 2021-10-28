@@ -14,8 +14,8 @@
             Patients Data
         </h2>
         <div class="flex flex-col md:flex-row px-3 py-3 bg-gray-100 mb-3 justify-between rounded shadow-inner">
-            <button class="text-gray-900 mb-1 md:mb-0 hover:text-white hover:bg-gray-900 border-solid
-                           border border-gray-700 font-semibold py-2 px-4 rounded">Export</button>
+            <a href="{{route('patient.export')}}"><button class="text-gray-900 mb-1 md:mb-0 hover:text-white hover:bg-gray-900 border-solid
+                           border border-gray-700 font-semibold py-2 px-4 rounded">Export</button></a>
             <a href="{{route('patient.create')}}">
                 <button class="text-blue-600 hover:text-white hover:bg-blue-600 border-solid
                                border border-gray-700 font-semibold py-2 px-4 rounded">
