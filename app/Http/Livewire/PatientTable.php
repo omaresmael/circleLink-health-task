@@ -51,7 +51,7 @@ class PatientTable extends DataTableComponent
     }
     public function rowView(): string
     {
-        return 'components.patient-table.row';
+        return 'livewire.patient-table-row';
     }
 
     public function query(): Builder

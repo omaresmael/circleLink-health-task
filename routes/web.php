@@ -16,4 +16,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PatientController::class,'index'])->name('patient.index');
 Route::get('/patient/create', [PatientController::class,'create'])->name('patient.create');
-Route::get('patient/export', [PatientController::class,'export'])->name('patient.export');
+

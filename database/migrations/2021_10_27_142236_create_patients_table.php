@@ -16,7 +16,7 @@ class CreatePatientsTable extends Migration
         Schema::create('patients', function (Blueprint $table) {
             $table->id();
             $table->string('name')->index();
-            $table->string('blood_pressure');
+            $table->string('blood_pressure')->index();
 
             $table->timestamps();
         });

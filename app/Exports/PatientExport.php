@@ -9,13 +9,8 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class PatientExport implements FromCollection, withHeadings
 {
+    use Exportable;
 
-    public function actions()
-    {
-        return [
-            (new PatientExport)->withHeadings(),
-        ];
-    }
     public function collection()
     {
         return Patient::select('name','blood_pressure')->get();

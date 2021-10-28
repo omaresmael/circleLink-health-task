@@ -2,13 +2,15 @@
 
 namespace Tests\Feature;
 
-use App\Exports\PatientExport;
+
+use App\Http\Livewire\PatientExport;
 use App\Http\Livewire\PatientCreate;
 use App\Http\Livewire\PatientTable;
 use App\Models\Patient;
 use App\Rules\BloodPressureFormat;
+use Illuminate\Bus\PendingBatch;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Bus;
 use Livewire\Livewire;
 use Maatwebsite\Excel\Facades\Excel;
 use Tests\TestCase;
@@ -112,28 +114,30 @@ class PatientTest extends TestCase
             $this->assertTrue(Patient::where('name','omar esmaeel')->exists());
     }
  // export tests ...
-    /**
-     * @test
-     **/
-    public function itDownloadsCsvFile()
-    {
-        $response = $this->get(route('patient.export'));
-        $response->assertDownload('patients.csv');
-    }
 
     /**
      * @test
      **/
-    public function itDownloadsCsvFileWithPatientData()
+    public function itDispatchesQueueExport()
     {
-        Excel::fake();
-        Patient::factory()->create([
-            'name' => 'omar esmaeel'
-        ]);
-        $this->get(route('patient.export'));
-        Excel::assertDownloaded('patients.csv', function(PatientExport $export) {
-            return $export->collection()->contains('name','=','omar esmaeel');
+        Bus::fake();
+        Livewire::test(PatientExport::class)
+            ->call('export');
+
+        Bus::assertBatched(function (PendingBatch $batch) {
+            return $batch->name == 'Export Patients' &&
+                $batch->jobs->count() === 1;
         });
 
+    }
+    /**
+     * @test
+     **/
+    public function itStoresPatientExport()
+    {
+        Excel::fake();
+        Livewire::test(PatientExport::class)
+            ->call('export');
+        Excel::assertStored('public/patients.csv');
     }
 }

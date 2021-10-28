@@ -17,8 +17,5 @@ class PatientController extends Controller
     {
         return view('patient.create');
     }
-    public function export()
-    {
-        return Excel::download(new PatientExport, 'patients.csv');
-    }
+
 }
