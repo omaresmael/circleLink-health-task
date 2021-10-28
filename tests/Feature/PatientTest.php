@@ -17,7 +17,7 @@ use Tests\TestCase;
 
 class PatientTest extends TestCase
 {
-    use RefreshDatabase;
+//    use RefreshDatabase;
 
     // index & update tests ...
     /**

@@ -1,4 +1,4 @@
-## CircleLink Health task 
+## CircleLink Health Task 
 Its a web app that does the Following
 
 * Displays patients' data (with sort - search features)
@@ -6,7 +6,7 @@ Its a web app that does the Following
 * Updates Patients' Blood Pressure
 * Exports patients' data in a csv file (using Queues)
 
-###Installation
+### Installation
 
 after you `clone` the project you need to do the Following
 

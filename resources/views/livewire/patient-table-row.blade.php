@@ -9,7 +9,7 @@
     @if($editedPatientIndex == $row->id)
 
         <input
-            class="shadow appearance-none border border-red-500 rounded py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            class="shadow appearance-none border rounded py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             placeholder="previous record: {{$row->blood_pressure}}"
             type="text"
             wire:model.defer="blood_pressure"

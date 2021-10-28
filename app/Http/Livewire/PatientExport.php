@@ -38,9 +38,9 @@ class PatientExport extends Component
     }
     public function updateExportProgress()
     {
-        $this->exportFinished = $this->exportBatch->finished();
 
-        if ($this->exportFinished) {
+        if ($this->exportBatch && $this->exportBatch->finished()) {
+            $this->exportFinished = true;
             $this->exporting = false;
         }
     }
